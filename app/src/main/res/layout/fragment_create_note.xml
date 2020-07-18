@@ -21,7 +21,7 @@
             android:layout_alignParentTop="true" />
 
         <EditText
-            android:id="@+id/todoTitle"
+            android:id="@+id/noteTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -30,23 +30,23 @@
             android:layout_below="@id/Heading"/>
 
         <EditText
-            android:id="@+id/todoBody"
+            android:id="@+id/noteBody"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:inputType="textMultiLine"
             android:hint="Body"
             android:gravity="bottom"
             android:layout_marginTop="30dp"
-            android:layout_below="@id/todoTitle"/>
+            android:layout_below="@id/noteTitle"/>
 
         <Button
-            android:id="@+id/createTodo"
+            android:id="@+id/createNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-            android:layout_below="@id/todoBody"
+            android:layout_below="@id/noteBody"
             />
 
     </RelativeLayout>

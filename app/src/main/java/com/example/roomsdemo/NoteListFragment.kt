@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.roomsdemo.databinding.FragmentNoteListBinding
@@ -24,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_note_item.*
 class NoteListFragment : Fragment() {
 
     private lateinit var binding: FragmentNoteListBinding
+    private val viewModel: NoteViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,9 +41,11 @@ class NoteListFragment : Fragment() {
         binding.addNoteBtn.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_noteListFragment_to_createNoteFragment)
         )
-        for(note in dummyList()){
-            noteAdapter.add(NoteItem(note))
-        }
+
+        viewModel.allNote.observe(viewLifecycleOwner, Observer { notes ->
+            noteAdapter.update(noteItemList(notes))
+        })
+
         binding.noteListRecylcerView.apply {
             adapter = noteAdapter
             layoutManager = LinearLayoutManager(context)
@@ -54,15 +59,6 @@ class NoteListFragment : Fragment() {
 
         return binding.root
     }
-
-    private fun dummyList(): List<Note>{
-        var noteList = mutableListOf<Note>()
-        for(i in 1..10){
-            noteList.add(Note(i.toLong(), "Note ${i}", "Some body here", false))
-        }
-        return noteList
-    }
-
 }
 
 class NoteItem(val note: Note): Item(){
@@ -72,7 +68,8 @@ class NoteItem(val note: Note): Item(){
         viewHolder.noteTitle.text = note.title
         viewHolder.noteStatus.isChecked = note.status
     }
-
 }
 
-//class NoteList(private val noteList: List<Note>): Co
+private fun noteItemList(notes: List<Note>): MutableCollection<NoteItem> {
+    return notes.map { NoteItem(it) } as MutableCollection<NoteItem>
+}

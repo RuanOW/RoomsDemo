@@ -18,5 +18,9 @@
         android:id="@+id/createNoteFragment"
         android:name="com.example.roomsdemo.CreateNoteFragment"
         android:label="fragment_create_note"
-        tools:layout="@layout/fragment_create_note" />
+        tools:layout="@layout/fragment_create_note" >
+        <action
+            android:id="@+id/action_createNoteFragment_to_noteListFragment"
+            app:destination="@id/noteListFragment" />
+    </fragment>
 </navigation>
